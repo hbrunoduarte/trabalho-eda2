@@ -69,11 +69,14 @@ void rotacionarDireita(ArvoreRN* T, NoRN* no) {
     no->pai = esquerda;
 }
 
-void balancearInsercao(ArvoreRN* T, NoRN* no) {
+int balancearInsercao(ArvoreRN* T, NoRN* no) {
     NoRN* tio;
+    int count = 0;
 
     // vai balanceando todos os níveis
     while(no->pai->cor == VERMELHO) {
+
+        count++;
 
         // CASO 1: O PAI É O FILHO ESQUERDO DO AVÔ
         if(no->pai == no->pai->pai->esq) {
@@ -126,6 +129,8 @@ void balancearInsercao(ArvoreRN* T, NoRN* no) {
     }
     // garante que a raiz é sempre preta
     T->raiz->cor = PRETO;
+
+    return count;
 }
 
 NoRN* min(ArvoreRN* T, NoRN* no) {
@@ -146,9 +151,13 @@ void transplante(ArvoreRN* T, NoRN* u, NoRN* v) {
     v->pai = u->pai;
 }
 
-void balancearRemocao(ArvoreRN* T, NoRN* x) {
+int balancearRemocao(ArvoreRN* T, NoRN* x) {
     NoRN* w;
+    int count = 0;
+
     while(x != T->raiz && x->cor == PRETO) {
+
+        count++;
 
         if(x == x->pai->esq) {
             w = x->pai->dir;
@@ -213,6 +222,8 @@ void balancearRemocao(ArvoreRN* T, NoRN* x) {
         }
     }
     x->cor = PRETO;
+
+    return count;
 }
 
 NoRN* criarNo(ArvoreRN* T, const int valor) {
@@ -261,13 +272,18 @@ ArvoreRN* criarAvore() {
     return T;
 }
 
-void inserir(ArvoreRN* T, const int valor) {
+int inserir(ArvoreRN* T, const int valor) {
+
+    int count = 0;
+
     NoRN* pai = T->sentinela;
     NoRN* aux = T->raiz;
 
     // busca binaria
     while(aux != T->sentinela) {
         pai = aux;
+
+        count++;
 
         if(valor < aux->valor) {
             aux = aux->esq;
@@ -291,14 +307,20 @@ void inserir(ArvoreRN* T, const int valor) {
         pai->dir = novo;
     }
 
-    balancearInsercao(T, novo);
+    count += balancearInsercao(T, novo);
+
+    return count;
 }
 
 void remover(ArvoreRN* T, const int valor) {
-    NoRN* z = T->raiz; 
+    NoRN* z = T->raiz;
+    int count = 0;
 
     // busca binária
     while(z != T->sentinela) {
+
+        count++;
+
         if(valor < z->valor) {
             z = z->esq;
         } else if(valor > z->valor) {
@@ -345,6 +367,8 @@ void remover(ArvoreRN* T, const int valor) {
     free(z);
     
     if(corOriginal == PRETO) {
-        balancearRemocao(T, x);
+        count += balancearRemocao(T, x);
     }
+
+    return count;
 }
