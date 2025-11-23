@@ -2,37 +2,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct info{
-    int valor;
-};
+#include "bTree.h"
 
-struct node{
-    struct info *keys ;
-    struct node **children;
-    int keysAmount;
-    struct node *dad;
-    int isLeaf; //1 == True , 0 == False
-};
-
-struct root{
-    int order;
-    struct node *rootNode;
-};
-
-struct node * createNode(struct root *root);
 int compare(struct info info1 , struct info info2);
 void recursiveAddNode(struct root *root , struct node *node , struct node *new , struct info data , long unsigned int *count);
-void addKey(struct root *root , struct info data , long unsigned int *count);
 struct node * split(struct root *root , struct node *node , long unsigned int *count);
 int overflow(struct node *node , struct root *root);
 void add(struct node *node , struct node *right , struct info *new , long unsigned int *count);
 struct node * locateNode(struct root *root , struct info aim , long unsigned int *count);
-struct root * createBTree(int order);
 void freeOnNode(struct node *node);
 int binarySearch(struct node *node , struct info aim , long unsigned int *count);
 int searchNode(struct root *root , struct info aim , long unsigned int *count);
 void underflow(struct node *dad , int son , struct root *root , long unsigned int *count);
-void delet(struct root *root , struct info aim , long unsigned int *count);
 void recursiveDeletNode(struct node *node , struct info aim , long unsigned int *count , struct root *root);
 
 int compare(struct info info1 , struct info info2){//if(info1 > info2)->return > 0 || if(info1 < info2)->return < 0 
