@@ -8,22 +8,7 @@
 // Regra 5: para cada nó, todos os caminhos deste nó até os nós folha da
 //          sua subárvore possuem o mesmo número de nós pretos
 
-typedef enum cor {
-    PRETO, VERMELHO
-} Cor;
-
-typedef struct no {
-    int valor;
-    Cor cor;
-    struct no* esq;
-    struct no* dir;
-    struct no* pai;
-} NoRN;
-
-typedef struct arvore {
-    NoRN* raiz;
-    NoRN* sentinela;
-} ArvoreRN;
+#include "rn.h"
 
 void rotacionarEsquerda(ArvoreRN* T, NoRN* no) {
     NoRN* direita = no->dir;
@@ -245,7 +230,7 @@ NoRN* criarNo(ArvoreRN* T, const int valor) {
 
 ////////////////////////////////////////////////////////////////////
 
-ArvoreRN* criarAvore() {
+ArvoreRN* criarAvoreRN() {
     ArvoreRN* T = malloc(sizeof(ArvoreRN));
     if(T == NULL) {
         perror("Falha ao alocar árvore");
@@ -272,7 +257,7 @@ ArvoreRN* criarAvore() {
     return T;
 }
 
-int inserir(ArvoreRN* T, const int valor) {
+int inserirRN(ArvoreRN* T, const int valor) {
 
     int count = 0;
 
@@ -312,7 +297,7 @@ int inserir(ArvoreRN* T, const int valor) {
     return count;
 }
 
-void remover(ArvoreRN* T, const int valor) {
+int removerRN(ArvoreRN* T, const int valor) {
     NoRN* z = T->raiz;
     int count = 0;
 
