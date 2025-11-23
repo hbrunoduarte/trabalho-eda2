@@ -200,6 +200,8 @@ int __insertAVL__(AVL *t, AVLnode *parent, AVLnode *actual, AVLnode *new, bool *
         }
     }
 
+    count++;
+
     if (*update) {
         updateHeight(actual);
         if (checkRebalance(t, parent, actual)) {
@@ -309,6 +311,8 @@ int __removeAVL__(AVL *t, AVLnode *parent, AVLnode *actual, void *target, bool *
             actual = substitute;
         }
     }
+
+    count++;
 
     if (*update) {
         updateHeight(actual);
