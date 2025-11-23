@@ -118,8 +118,9 @@ int balancearInsercao(ArvoreRN* T, NoRN* no) {
     return count;
 }
 
-NoRN* min(ArvoreRN* T, NoRN* no) {
+NoRN* min(ArvoreRN* T, NoRN* no, int *count) {
     while(no->esq != T->sentinela) {
+        (*count)++;
         no = no->esq;
     }
     return no;
@@ -331,7 +332,7 @@ int removerRN(ArvoreRN* T, const int valor) {
         x = z->esq;
         transplante(T, z, z->esq);
     } else {
-        y = min(T, z->dir);
+        y = min(T, z->dir, &count);
         corOriginal = y->cor;
         x = y->dir;
 
