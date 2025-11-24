@@ -21,5 +21,6 @@ typedef struct arvore {
 ArvoreRN* criarAvoreRN();
 int inserirRN(ArvoreRN* T, const int valor);
 int removerRN(ArvoreRN* T, const int valor);
+void destruirRN(ArvoreRN** T_ref);
 
 #endif

@@ -358,3 +358,31 @@ int removerRN(ArvoreRN* T, const int valor) {
 
     return count;
 }
+
+void liberarNosRN(ArvoreRN* T, NoRN* no) {
+
+    if (no == NULL || no == T->sentinela) {
+        return;
+    }
+
+    liberarNosRN(T, no->esq);
+    liberarNosRN(T, no->dir);
+
+    free(no);
+}
+
+void destruirRN(ArvoreRN** T_ref) {
+    ArvoreRN* T = *T_ref;
+    
+    if (T == NULL) return;
+
+    liberarNosRN(T, T->raiz);
+
+    if (T->sentinela != NULL) {
+        free(T->sentinela);
+    }
+
+    free(T);
+    
+    *T_ref = NULL;
+}

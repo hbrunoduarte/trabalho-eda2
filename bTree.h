@@ -21,6 +21,6 @@ struct root{
 struct root * createBTree(int order);
 void addKey(struct root *root , struct info data , long unsigned int *count);
 void delet(struct root *root , struct info aim , long unsigned int *count);
-struct node * createNode(struct root *root);
+void destroyBTree(struct root **root_ref);
 
 #endif

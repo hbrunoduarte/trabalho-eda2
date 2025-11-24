@@ -15,6 +15,8 @@ int binarySearch(struct node *node , struct info aim , long unsigned int *count)
 int searchNode(struct root *root , struct info aim , long unsigned int *count);
 void underflow(struct node *dad , int son , struct root *root , long unsigned int *count);
 void recursiveDeletNode(struct node *node , struct info aim , long unsigned int *count , struct root *root);
+struct node * createNode(struct root *root);
+void liberarNosBTree(struct node *node);
 
 int compare(struct info info1 , struct info info2){//if(info1 > info2)->return > 0 || if(info1 < info2)->return < 0 
     return info1.valor - info2.valor;
@@ -391,4 +393,33 @@ void underflow(struct node *dad , int son , struct root *root , long unsigned in
 
     return;
 
+}
+
+void liberarNosBTree(struct node *node) {
+    if (node == NULL) return;
+
+    if (!node->isLeaf) {
+        for (int i = 0; i <= node->keysAmount; i++) {
+            liberarNosBTree(node->children[i]);
+        }
+    }
+
+    if (node->keys != NULL) free(node->keys);
+    if (node->children != NULL) free(node->children);
+    
+    free(node);
+}
+
+void destroyBTree(struct root **root_ref) {
+    struct root *root = *root_ref;
+
+    if (root == NULL) return;
+
+    if (root->rootNode != NULL) {
+        liberarNosBTree(root->rootNode);
+    }
+
+    free(root);
+
+    *root_ref = NULL;
 }
