@@ -277,7 +277,7 @@ int inserirRN(ArvoreRN* T, const int valor) {
             aux = aux->dir;
         } else {
             // duplicata
-            return;
+            return count;
         }
     }
 
@@ -318,7 +318,7 @@ int removerRN(ArvoreRN* T, const int valor) {
     }
 
     if(z == T->sentinela) {
-        return; // no não encontrado
+        return count; // no não encontrado
     }
 
     NoRN* y = z;
