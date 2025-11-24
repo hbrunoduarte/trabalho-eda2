@@ -21,7 +21,7 @@
 #define BTREE10_FILE "btree10.csv"
 
 #define ANALYSED_TREES 5
-#define MAX_ELEMENTS 10000
+#define MAX_ELEMENTS 1000000
 #define STEP 1000
 #define SAMPLES MAX_ELEMENTS/STEP
 #define RANGE_ELEMENTS 2 * MAX_ELEMENTS
@@ -252,18 +252,13 @@ int main() {
         for (int i = 0; i < MAX_ELEMENTS; i++) {
 
             insert_Iterations_AVL += insertAVL(avl, sample+i);
-            printf("\n\tInsercao %i - chave %i\n\tAvl feito\n", i+1, sample[i]);
             insert_Iterations_RN += inserirRN(rn, sample[i]);
-            printf("\tRN feito\n");
 
             struct info bElement = createInfo(sample[i]);
             
             addKey(bTree1, bElement, &insert_Iterations_B1);
-            printf("\tb1 feito\n");
             addKey(bTree5, bElement, &insert_Iterations_B5);
-            printf("\tb5 feito\n");
             addKey(bTree10, bElement, &insert_Iterations_B10);
-            printf("\tb10 feito\n");
 
             if ((i+1) % STEP == 0) {
                 saved_Insert_Iterations[AVL_POS][samplePosition] = insert_Iterations_AVL;
