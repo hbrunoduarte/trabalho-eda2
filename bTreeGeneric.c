@@ -38,6 +38,8 @@ struct node * createNode(struct root *root){
 
     new->isLeaf = 1;
 
+    new->dad = NULL;
+
     return new;
 }
 
