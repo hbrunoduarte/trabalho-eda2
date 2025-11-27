@@ -186,10 +186,6 @@ int main() {
         return -1;
     }
 
-    for (int i = 0; i < ANALYSED_TREES; i++)
-        for (int j = 0; j < SAMPLES; j++)
-            average_inserts[i][j] = average_deletions[i][j] = 0;
-
     for (int test = 1; test <= TESTS; test++) {
 
         printf("\n[Amostragem %i]\n", test);
