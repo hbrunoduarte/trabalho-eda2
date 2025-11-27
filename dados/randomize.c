@@ -7,7 +7,7 @@ void writeFile(int *v);
 
 int main (){
 
-    int *v = readFile("randomFileInt.csv");
+    int *v = readFile("dados/randomFileInt.csv");
     int i , aux , r;
 
     srand(time(NULL));
@@ -35,17 +35,17 @@ int * readFile(char *s){
     v = malloc(sizeof(int) * 10000);
 
     for(i = 0;i < 10000;i++){
-        v[i] = fscanf(file , "%d" , &v[i]);
+        fscanf(file , "%d;" , &v[i]);
     }
 
+    fclose(file);
     return v;
-
 }
 
  void writeFile(int *v){
 
     int i;
-    FILE *file = fopen("shuffled.csv" , "w");
+    FILE *file = fopen("dados/shuffled.csv" , "w");
 
     for(i = 0;i < 10000;i++){
         fprintf(file , "%d;" , v[i]);
