@@ -66,7 +66,7 @@ int balancearInsercao(ArvoreRN* T, NoRN* no) {
         // CASO 1: O PAI É O FILHO ESQUERDO DO AVÔ
         if(no->pai == no->pai->pai->esq) {
             tio =  no->pai->pai->dir;
-            
+                        
             // CASO 1A: TIO VERMELHO (recoloração)
             if(tio->cor == VERMELHO) {
                 tio->cor = PRETO;
@@ -80,11 +80,13 @@ int balancearInsercao(ArvoreRN* T, NoRN* no) {
                 if(no == no->pai->dir) {
                     no = no->pai;
                     rotacionarEsquerda(T, no);
+                    count++;
                 }
                 // arruma a linha
                 no->pai->cor = PRETO;
                 no->pai->pai->cor = VERMELHO;
                 rotacionarDireita(T, no->pai->pai);
+                count++;
             }
         }
         // CASO 2: O PAI É O FILHO DIREITO DO AVÔ
@@ -104,11 +106,13 @@ int balancearInsercao(ArvoreRN* T, NoRN* no) {
                 if(no == no->pai->esq) {
                     no = no->pai;
                     rotacionarDireita(T, no);
+                    count++;
                 }
                 // arruma a linha
                 no->pai->cor = PRETO;
                 no->pai->pai->cor = VERMELHO;
                 rotacionarEsquerda(T, no->pai->pai);
+                count++;
             }
         }
     }
@@ -153,6 +157,7 @@ int balancearRemocao(ArvoreRN* T, NoRN* x) {
                 x->pai->cor = VERMELHO;
                 rotacionarEsquerda(T, x->pai);
                 w = x->pai->dir;
+                count++;
             }
 
             if(w->esq->cor == PRETO && w->dir->cor == PRETO) {
@@ -166,6 +171,7 @@ int balancearRemocao(ArvoreRN* T, NoRN* x) {
                     w->cor = VERMELHO;
                     rotacionarDireita(T, w);
                     w = x->pai->dir;
+                    count++;
                 }
 
                 w->cor = x->pai->cor;
@@ -173,6 +179,7 @@ int balancearRemocao(ArvoreRN* T, NoRN* x) {
                 w->dir->cor = PRETO;
                 rotacionarEsquerda(T, x->pai);
                 x = T->raiz;
+                count++;
             }
         }
 
@@ -184,6 +191,7 @@ int balancearRemocao(ArvoreRN* T, NoRN* x) {
                 x->pai->cor = VERMELHO;
                 rotacionarDireita(T, x->pai);
                 w = x->pai->esq;
+                count++;
             }
 
             if(w->dir->cor == PRETO && w->esq->cor == PRETO) {
@@ -197,6 +205,7 @@ int balancearRemocao(ArvoreRN* T, NoRN* x) {
                     w->cor = VERMELHO;
                     rotacionarEsquerda(T, w);
                     w = x->pai->esq;
+                    count++;
                 }
 
                 w->cor = x->pai->cor;
@@ -204,6 +213,7 @@ int balancearRemocao(ArvoreRN* T, NoRN* x) {
                 w->esq->cor = PRETO;
                 rotacionarDireita(T, x->pai);
                 x = T->raiz;
+                count++;
             }
         }
     }

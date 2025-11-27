@@ -130,7 +130,7 @@ AVLnode* drr(AVLnode *n) {
     return srr(n);
 }
 
-bool checkRebalance(AVL *t, AVLnode *parent, AVLnode *n) {
+bool checkRebalance(AVL *t, AVLnode *parent, AVLnode *n, int *count) {
     if (!n) return FALSE;
 
     int fb = balanceFactor(n);
@@ -140,16 +140,22 @@ bool checkRebalance(AVL *t, AVLnode *parent, AVLnode *n) {
     AVLnode *substitute = NULL;
 
     if (fb > MAX_LIMIT) {
-        if (balanceFactor(n->left) >= 0)
+        if (balanceFactor(n->left) >= 0) {
             substitute = srr(n);
-        else
+            (*count)++;
+        } else {
             substitute = drr(n);
+            *count += 2;
+        }
     
     } else {
-        if (balanceFactor(n->right) <= 0)
+        if (balanceFactor(n->right) <= 0) {
             substitute = slr(n);
-        else
-            substitute = dlr(n); 
+            (*count)++;
+        } else {
+            substitute = dlr(n);
+            *count += 2;
+        }
     }
 
     if (parent) {
@@ -175,6 +181,7 @@ int __insertAVL__(AVL *t, AVLnode *parent, AVLnode *actual, AVLnode *new, bool *
 
     if (!actual) {
 
+        count++;
         if (t->comp(new->key, parent->key) < 0)
             parent->left = new;
         else
@@ -201,10 +208,10 @@ int __insertAVL__(AVL *t, AVLnode *parent, AVLnode *actual, AVLnode *new, bool *
     }
 
     count++;
-
     if (*update) {
+        
         updateHeight(actual);
-        if (checkRebalance(t, parent, actual)) {
+        if (checkRebalance(t, parent, actual, &count)) {
             *update = FALSE;
         }
     }
@@ -236,7 +243,7 @@ AVLnode* removeMinimum(AVL *t, AVLnode *parent, AVLnode *actual, bool *update, i
         minimum = removeMinimum(t, actual, actual->left, update, i);
 
         updateHeight(actual);
-        checkRebalance(t, parent, actual);
+        checkRebalance(t, parent, actual, i);
 
     } else {
         *update = TRUE;
@@ -312,11 +319,10 @@ int __removeAVL__(AVL *t, AVLnode *parent, AVLnode *actual, void *target, bool *
         }
     }
 
-    count++;
-
     if (*update) {
+        count++;
         updateHeight(actual);
-        checkRebalance(t, parent, actual);
+        checkRebalance(t, parent, actual, &count);
     }
 
     return count;
