@@ -57,12 +57,12 @@ for ds in datasets:
         print(f"Error processing {ds['file']}: {e}")
 
 # Styling
-ax1.set_title("Regressão Logarítmica - Custo Marginal de INSERÇÃO (Sem Pontos)", fontsize=14)
+ax1.set_title("Regressão Logarítmica - Custo Marginal de INSERÇÃO", fontsize=14)
 ax1.set_ylabel("Iterações", fontsize=12)
 ax1.legend(loc='upper left', bbox_to_anchor=(1, 1), fontsize='small')
 ax1.grid(True, linestyle='--', alpha=0.7)
 
-ax2.set_title("Regressão Logarítmica - Custo Marginal de REMOÇÃO (Sem Pontos)", fontsize=14)
+ax2.set_title("Regressão Logarítmica - Custo Marginal de REMOÇÃO", fontsize=14)
 ax2.set_xlabel("Tamanho da Árvore", fontsize=12)
 ax2.set_ylabel("Iterações", fontsize=12)
 ax2.legend(loc='upper left', bbox_to_anchor=(1, 1), fontsize='small')
